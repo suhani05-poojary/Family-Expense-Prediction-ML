@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Family Expense Tracking System</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(to right,#4facfe,#00f2fe);
+    margin:0;
+}
+
+.header{
+    text-align:center;
+    color:white;
+    padding:20px;
+}
+
+.container{
+    width:80%;
+    margin:auto;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-top:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input,button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+}
+
+button{
+    background:#007bff;
+    color:white;
+    border:none;
+}
+
+.result{
+    font-size:20px;
+    color:green;
+    font-weight:bold;
+    text-align:center;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>Family Expense Tracking System Dashboard</h1>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<form action="/predict" method="post">
+
+<label>Month:</label>
+<input type="number" name="month" required>
+
+<label>Food Expense:</label>
+<input type="number" name="food" required>
+
+<label>Rent Expense:</label>
+<input type="number" name="rent" required>
+
+<label>Travel Expense:</label>
+<input type="number" name="travel" required>
+
+<label>Shopping Expense:</label>
+<input type="number" name="shopping" required>
+
+<label>Bills Expense:</label>
+<input type="number" name="bills" required>
+
+<button type="submit">Predict Total Expense</button>
+
+</form>
+
+</div>
+
+<div class="card result">
+{{ prediction_text }}
+</div>
+
+<div class="card">
+
+<h3>Expense Bar Chart</h3>
+
+<canvas id="barChart"></canvas>
+
+</div>
+
+</div>
+
+<script>
+
+var expenseData = JSON.parse('{{ [food|default(0), rent|default(0), travel|default(0), shopping|default(0), bills|default(0)] | tojson | safe }}');
+
+var labels = ["Food","Rent","Travel","Shopping","Bills"];
+
+var ctx = document.getElementById("barChart").getContext("2d");
+
+new Chart(ctx,{
+    type:"bar",
+    data:{
+        labels:labels,
+        datasets:[{
+            label:"Expense Amount (₹)",
+            data:expenseData,
+            backgroundColor:[
+                "#ff6384",
+                "#36a2eb",
+                "#4bc0c0",
+                "#ff9f40",
+                "#9966ff"
+            ]
+        }]
+    },
+    options:{
+        responsive:true,
+        scales:{
+            y:{
+                beginAtZero:true
+            }
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>
