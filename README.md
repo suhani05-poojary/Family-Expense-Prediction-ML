@@ -32,3 +32,21 @@ Group Project – Family Expense Prediction ML
 
 ## Contributor
 Suhani Poojary
+
+---
+
+## 📸 Project Output Screenshots
+
+### 🏠 Home Page
+![Home Page](screenshots/homepage.png)
+
+### 📝 Input Form
+![Input Form](screenshots/input_form.png)
+
+### 📊 Prediction Result
+![Prediction Result](screenshots/prediction_result.png)
+
+### 🗄️ MongoDB Stored Data
+![MongoDB Data](screenshots/mongodb_data.png)
+
+---
